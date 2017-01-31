@@ -21,7 +21,7 @@ export class EventsListComponent implements OnInit {
         location: {
             address:'1057 DT',
             city:'London',
-            country:'England'
+            country:'EnglandTest'
         }
     }
     constructor() { }
