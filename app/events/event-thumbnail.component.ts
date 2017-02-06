@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IEvent } from './shared/index'
 
 @Component({
     selector: 'event-thumbnail',
     template: `
-     <div class="well hoverwell thumbnail">
+     <div [routerLink]="['/events', event.id]" class="well hoverwell thumbnail">
          <h2>{{event?.name}}</h2>
          <div>Date: {{event?.date}}</div>
          <div [ngClass]="getStartTimeClass()" [ngSwitch]="event?.time">
@@ -33,7 +34,7 @@ import { Component, Input, OnInit } from '@angular/core';
     `]
 })
 export class EventThumbnailComponent implements OnInit {
-    @Input() event: any;
+    @Input() event: IEvent;
 
     constructor() { }
 
@@ -51,8 +52,7 @@ export class EventThumbnailComponent implements OnInit {
     return ['green', 'bold'];
     return [];
      }
-    
-    
+
     //Also I can use [ngStyle]
      getStartTimeStyle(): any{
      if(this.event && this.event.time === '8:00 am')
