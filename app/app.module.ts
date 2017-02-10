@@ -12,7 +12,11 @@ import {
    EventRouteActivator,
    EventListResolver,
    CreateSessionComponent,
-   SessionListComponent
+   SessionListComponent,
+   DurationPipe,
+   UpVoteComponent,
+   VoterService,
+   LocationValidator
 } from './events/index'
 
 //Components
@@ -20,14 +24,17 @@ import { EventsAppComponent }   from './events-app.component'
 import { NavBarComponent } from './nav/navbar.component'
 import { Error404Component } from './errors/404.component'
 
+
 //Serivces
-import { ToastrService } from './common/toastr.service'
+import { JQ_TOKEN, TOASTR_TOKEN, Toastr, CollapsibleWellComponent, SimpleModalComponent, ModalTriggerDirective } from './common/index'
 import { AuthService } from './user/auth.service'
 
 
 //Router
 import { appRoutes } from './routes';
 
+declare let toastr: Toastr;
+declare let jQuery: Object;
 
 @NgModule({
     imports: [
@@ -44,18 +51,36 @@ import { appRoutes } from './routes';
         CreateEventComponent,
         Error404Component,
         CreateSessionComponent,
-        SessionListComponent
+        SessionListComponent,
+        CollapsibleWellComponent,
+        DurationPipe,
+        SimpleModalComponent,
+        ModalTriggerDirective,
+        UpVoteComponent,
+        LocationValidator
         ],
     providers: [
                   EventService,
-                  ToastrService,
-                  EventRouteActivator,
+                  {
+                      provide: TOASTR_TOKEN,
+                      useValue: toastr
+                  },
+                  {provide: JQ_TOKEN, useValue: jQuery},
+                //   EventRouteActivator,
+                // It is the same..
+                {
+                   provide:  EventRouteActivator,
+                   useClass:  EventRouteActivator
+                },
+                //Also you can get an instance of a different sevice like this
+                //{provide: Logger, useClass: FileLogger}
                   EventListResolver,
                   {
                       provide: 'canDeactivateCreateEvent',
                       useValue: checkDirtyState
                   },
-                  AuthService
+                  AuthService,
+                  VoterService
             ],
     bootstrap: [ EventsAppComponent ]
 })
