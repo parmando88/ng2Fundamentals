@@ -15,6 +15,8 @@ export class SessionListComponent implements OnInit, OnChanges {
 
     @Input() sortBy: string
 
+    @Input() eventId: number
+
 
     constructor(private _authService:AuthService, private _voterService: VoterService) { }
 
@@ -30,9 +32,9 @@ export class SessionListComponent implements OnInit, OnChanges {
 
     toogleVote(session: ISession) {
        if(this.userHasVoted(session)){
-           this._voterService.deleteVoter(session, this._authService.currentUser.userName);
+           this._voterService.deleteVoter(this.eventId, session, this._authService.currentUser.userName);
        } else {
-          this._voterService.addVoter(session, this._authService.currentUser.userName);
+          this._voterService.addVoter(this.eventId, session, this._authService.currentUser.userName);
        }
 
        if(this.sortBy === 'votes')

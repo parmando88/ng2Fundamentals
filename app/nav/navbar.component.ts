@@ -20,18 +20,18 @@ export class NavBarComponent implements OnInit {
     searchTerm: string = "";
     foundSessions: ISession[]
 
-    constructor(private _authService: AuthService, private _eventService: EventService) { 
+    constructor(private _authService: AuthService, private _eventService: EventService) {
     }
 
     ngOnInit() { }
 
-   
+
 
     searchSessions(searchTerm){
         this._eventService.searchSessions(searchTerm).subscribe
         (sessions => {
             this.foundSessions = sessions;
-            
+
         })
     }
 }

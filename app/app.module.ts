@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { HttpModule } from '@angular/http'
 
 import {
    EventsListComponent,
@@ -9,7 +10,7 @@ import {
    EventService,
    EventDetailsComponent,
    CreateEventComponent,
-   EventRouteActivator,
+   EventResolver,
    EventListResolver,
    CreateSessionComponent,
    SessionListComponent,
@@ -41,6 +42,7 @@ declare let jQuery: Object;
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpModule,
         RouterModule.forRoot(appRoutes)],
     declarations: [
         EventsAppComponent,
@@ -66,12 +68,8 @@ declare let jQuery: Object;
                       useValue: toastr
                   },
                   {provide: JQ_TOKEN, useValue: jQuery},
-                //   EventRouteActivator,
-                // It is the same..
-                {
-                   provide:  EventRouteActivator,
-                   useClass:  EventRouteActivator
-                },
+                EventResolver
+                ,
                 //Also you can get an instance of a different sevice like this
                 //{provide: Logger, useClass: FileLogger}
                   EventListResolver,

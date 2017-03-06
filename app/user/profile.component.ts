@@ -37,8 +37,11 @@ constructor(private _authService:AuthService, private _router: Router, @Inject(T
 
        saveProfile(formValues){
          if(this.profileForm.valid){
-        this._authService.updateCurrentUser(formValues.firstName, formValues.lastName);
-        this._toastr.success('Profile Saved');
+        this._authService.updateCurrentUser(formValues.firstName, formValues.lastName)
+            .subscribe(()=> {
+               this._toastr.success('Profile Saved');
+            });
+      
        // this._router.navigate(['/events'])
          }
        }
@@ -52,5 +55,11 @@ constructor(private _authService:AuthService, private _router: Router, @Inject(T
        }
         validateLastName(){
        return  (this.lastName.valid || this.lastName.untouched)
-       }
+      }
+      
+      logout() {
+        this._authService.logout().subscribe(() => {
+           this._router.navigate(['/user/login']);
+        })
+      }
 }
